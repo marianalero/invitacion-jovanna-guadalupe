@@ -336,7 +336,7 @@
 		}
 	
 
-		window.open("https://wa.me/+526623674394/?text="+ message,"_blank");
+		window.open("https://wa.me/+526623674394/?text="+ confirmText,"_blank");
 	 	
 		
 	
