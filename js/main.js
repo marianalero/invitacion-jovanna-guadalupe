@@ -322,22 +322,38 @@
 	document.getElementById("confirmar").addEventListener("click", confirmar);
 	function confirmar(){
 		var name = document.getElementById("name").value
+	
 		var number = document.getElementById("numInv").innerHTML;
 		number = number.substring(30,32);
-		var confirmText = "Hola,";
+		// number = number.slice(-6);
+		var confirmText = "";
 		var selNumInv = $( "#selNumInv" ).val();
 		var radioValue = $("input[name='confirm']:checked").val();
 		if(radioValue == "confirm"){
-			confirmText += "%20quiero%20confirmar%20mi%20asistencia%20para%20la%20quinceañera%20de%20Jovanna.Mi nombre es"+name+",número de personas:"+selNumInv;
+			confirmText = "Asistiré"
 		}
 		else
 		{
-			confirmText+="%20lamentablemente%20no%20podré%20asistir%20a%20la%20quinceañera%20de%20Jovanna,mi nombre es"+name;
+			confirmText = "No Asistiré";
+			selNumInv =0;
 		}
-	
-
-		window.open("https://wa.me/+526623674394/?text="+ confirmText,"_blank");
-	 	
+		//https://docs.google.com/forms/d/e/1FAIpQLScr7nyU31EVwadbyyfLhWoC2IJCGZKR9UgQakK_aZacbJHVnA/viewform?usp=pp_url&entry.516140191=marian&entry.1599079301=si&entry.465259973=3
+		let url = "https://docs.google.com/forms/d/e/1FAIpQLScr7nyU31EVwadbyyfLhWoC2IJCGZKR9UgQakK_aZacbJHVnA/formResponse?entry.516140191="+name+"&entry.1599079301="+confirmText+"&entry.465259973="+selNumInv+'&submit=Submit';
+		console.log(url);
+		fetch(url, { method: 'GET', 
+		mode: "no-cors", // apparently Google will only submit a form if "mode" is "no-cors"
+		redirect: "follow",
+		referrer: "no-referrer",
+		headers: {
+		  'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		 } )
+		.then(res=> {
+			console.log(res)
+			var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
+			confirmModal.show()
+		})
+		.catch(reason => console.log(reason));
 		
 	
 	}
